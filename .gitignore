@@ -10,6 +10,9 @@ venv/
 *_report.txt
 ~$*
 
+# 智能体在本目录开会话时产生的记忆与临时数据
+.workbuddy/
+
 # 编辑器与系统杂物
 .vscode/
 .idea/
