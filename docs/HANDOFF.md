@@ -10,9 +10,11 @@
 - `python check_hygiene.py .` → **0 问题**
 - 两个 agent 技能目录里的副本与 `skill/project-handoff-resume/` **逐字节一致**
 - 三个 `.ps1` 的 UTF-8 BOM 完好
-- 仓库状态：`main` 与 `origin/main` 一致，提交依次为 `fc57771`（初始化）→ `ac909d3`（接入自身交接工作流）→ `0a2a129`（忽略 `.workbuddy/`）
+- 仓库状态：`main` 与 `origin/main` 一致，提交依次为 `fc57771`（初始化）→ `ac909d3`（接入自身交接工作流）→ `0a2a129`（忽略 `.workbuddy/`）→ `781eb8a`（补录仓库状态与续做前提）→ 本次提交（新增 `docs/ENGINEERING_NOTES.md`）
 
 若在有 CI 的仓库里接手：本仓库**没有** CI，推送不消耗构建分钟，可以随时直接推。
+
+**工程知识库**：`docs/ENGINEERING_NOTES.md` 是本仓库的常驻工程笔记，装着从 `esp32_s3_eink_test` 会话里带过来的全部一手排障细节（两个真缺陷的定位过程、沙箱限制、GitHub 推送三道障碍的修法、Windows 文件卫生、GUI 验证陷阱、自检设计原则）。**本文件只给结论，细节一律查那份**。它不依赖任何外部工程，本仓库自带 —— 即使 `esp32_s3_eink_test` 出了任何问题，这套知识也不会丢。
 
 ## Update Rule
 
@@ -47,9 +49,12 @@ Refresh this file after substantial work. Treat work as substantial when at leas
 
 - `.workbuddy/` 已加入 `.gitignore`：在本目录开会话时 WorkBuddy 会生成 `.workbuddy/memory/`，属会话数据而非仓库内容。与 `esp32_s3_eink_test` 仓库的策略一致。
 - 本文件与 `CODEX_PROJECT_PROMPT.md`、`docs/PROJECT_MAP.md` 的**章节标题保持英文**（对齐 `templates/` 与自检的结构检查），**正文用中文**。
-- 工具箱**自己的记忆不在本目录**：截至 2026-09-10 的绝大部分工具箱开发记录（含两个真缺陷的定位过程、沙箱限制、推送排障）写在 `C:\Users\Admin\Desktop\esp32_s3_eink_test\.workbuddy\memory\2026-09-10.md`，因为当时会话的工作目录是那个工程。本文件已把它们提炼成结论，不必去找原始日志。
+- 工具箱**自己的记忆不在本目录**：`esp32_s3_eink_test` 会话的原始日志（含两个真缺陷的定位过程、沙箱限制、推送排障）本写在 `C:\Users\Admin\Desktop\esp32_s3_eink_test\.workbuddy\memory\2026-09-10.md`，但那属于那个工程的目录、随时可能被清理。**已把其中与工具箱有关的一切提炼进本仓库的 `docs/ENGINEERING_NOTES.md`**，那是权威副本；本文件只保留结论。以后复盘**只看 `docs/ENGINEERING_NOTES.md`**，不必再去翻 esp32 工程的日志。
+- **本仓库自洽**：代码、skill 源、交接三件套、工程笔记全部随仓库走，不引用 `esp32_s3_eink_test` 里的任何路径。克隆本仓库即可独立续做与排障。
 
 **修过的两个真缺陷**
+
+（完整的定位过程、复现步骤与验证方式见 `docs/ENGINEERING_NOTES.md` §1。）
 
 1. `one-click-init-project.ps1` 曾用**裸名 `powershell -File`** 调用兄弟脚本：名字解析不到时，在 `$ErrorActionPreference = "Stop"` 下会让整个脚本静默中断（只看到部分输出和非零退出码）。已改为同进程 `& $initScript -ProjectPath $ProjectPath`。
 2. GUI 中空路径会退化成 `Path(".")`（即 GUI 进程的当前目录），于是把 CWD 当项目来报告，甚至可能往 CWD 写模板文件。已由 `resolve_project_path()` 堵住，7 处调用点全部处理 `None`。
