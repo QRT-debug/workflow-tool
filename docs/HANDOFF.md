@@ -10,7 +10,7 @@
 - `python check_hygiene.py .` → **0 问题**
 - 两个 agent 技能目录里的副本与 `skill/project-handoff-resume/` **逐字节一致**
 - 三个 `.ps1` 的 UTF-8 BOM 完好
-- 仓库状态：`main` 与 `origin/main` 一致，提交依次为 `fc57771`（初始化）→ `ac909d3`（接入自身交接工作流）→ `0a2a129`（忽略 `.workbuddy/`）→ `781eb8a`（补录仓库状态与续做前提）→ 本次提交（新增 `docs/ENGINEERING_NOTES.md`）
+- 仓库状态：`main` 与 `origin/main` 一致，提交依次为 `fc57771`（初始化）→ `ac909d3`（接入自身交接工作流）→ `0a2a129`（忽略 `.workbuddy/`）→ `781eb8a`（补录仓库状态与续做前提）→ `269a26b`（新增 `docs/ENGINEERING_NOTES.md` 并让本文件引用它）
 
 若在有 CI 的仓库里接手：本仓库**没有** CI，推送不消耗构建分钟，可以随时直接推。
 
@@ -81,7 +81,7 @@ Refresh this file after substantial work. Treat work as substantial when at leas
 2. 给 `check_hygiene.py` 增加能扫描 `.workbuddy` 下指定目录的能力（`--force` 或放宽跳过规则），让"检查已安装技能"成为可能。
 3. 考虑把两条安装实现合并成一条（让 `.ps1` 只做薄封装），消除 GUI 与命令行之间的漂移风险。
 4. 人工双击 `打开工作流工具.vbs`，确认冷启动、窗口尺寸与按钮换行。
-5. **日常纪律**：改完任何东西 → `python selftest.py` → `python check_hygiene.py .` → 提交；若改了 `skill/` 源，还要确认两份已装副本同步。
+5. **日常纪律**：改完任何东西 → `python selftest.py` → `python check_hygiene.py .` → 提交；若改了 `skill/` 源，还要确认两份已装副本同步。**若这次的改动带出了新的环境限制或排障经验，一并回写 `docs/ENGINEERING_NOTES.md`** —— 那份笔记的价值就在于持续累积。
 
 ## How To Resume In A New Chat
 
