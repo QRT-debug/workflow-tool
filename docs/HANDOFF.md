@@ -10,6 +10,9 @@
 - `python check_hygiene.py .` → **0 问题**
 - 两个 agent 技能目录里的副本与 `skill/project-handoff-resume/` **逐字节一致**
 - 三个 `.ps1` 的 UTF-8 BOM 完好
+- 仓库状态：`main` 与 `origin/main` 一致，提交依次为 `fc57771`（初始化）→ `ac909d3`（接入自身交接工作流）→ `0a2a129`（忽略 `.workbuddy/`）
+
+若在有 CI 的仓库里接手：本仓库**没有** CI，推送不消耗构建分钟，可以随时直接推。
 
 ## Update Rule
 
@@ -38,6 +41,13 @@ Refresh this file after substantial work. Treat work as substantial when at leas
 - 启动链是程序化验证的：`打开工作流工具.vbs` → `pyw` 解析到系统 Python 3.13.9（tkinter 8.6）。**托管 Python 3.13.12 没有 tkinter。**
 - 在真实工程上运行 `init-project.ps1` 成功（目标就是本仓库自己），生成的三份文件与 `templates/` 逐字节一致。
 - `project_handoff_status(本工具箱)` 现在返回「完整」。
+- **续做本仓库的前提**：新会话的**工作目录必须开在本仓库根目录**，再说「使用 project-handoff-resume，然后继续这个工程」。skill 读的是**相对当前会话工作目录**的三份交接文件，那句话本身不带路径 —— 在别的目录（例如 `esp32_s3_eink_test`）说同一句话，会去续做那个目录的工程。skill 未自动触发时的兜底句是「先读 CODEX_PROJECT_PROMPT.md、docs/PROJECT_MAP.md、docs/HANDOFF.md，再继续这个工程，不要从头重新阅读。」更省事：开本仓库自己的 GUI、把项目路径指向它自己，状态会显示「完整」并推荐续聊。
+
+**仓库约定**
+
+- `.workbuddy/` 已加入 `.gitignore`：在本目录开会话时 WorkBuddy 会生成 `.workbuddy/memory/`，属会话数据而非仓库内容。与 `esp32_s3_eink_test` 仓库的策略一致。
+- 本文件与 `CODEX_PROJECT_PROMPT.md`、`docs/PROJECT_MAP.md` 的**章节标题保持英文**（对齐 `templates/` 与自检的结构检查），**正文用中文**。
+- 工具箱**自己的记忆不在本目录**：截至 2026-09-10 的绝大部分工具箱开发记录（含两个真缺陷的定位过程、沙箱限制、推送排障）写在 `C:\Users\Admin\Desktop\esp32_s3_eink_test\.workbuddy\memory\2026-09-10.md`，因为当时会话的工作目录是那个工程。本文件已把它们提炼成结论，不必去找原始日志。
 
 **修过的两个真缺陷**
 
