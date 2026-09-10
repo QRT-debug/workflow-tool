@@ -1,0 +1,28 @@
+# 换行符统一策略：仓库内一律保存 LF，检出到工作区也用 LF。
+# 目的：Codex 与 WorkBuddy 谁来写文件，都不会再产生 CRLF/LF 抖动或「整文件已改动」的噪声 diff。
+# 说明：策略由本文件钉死，不依赖各机器上的 core.autocrlf 设置（本机为 true，也就是默认会做 CRLF 转换）。
+* text=auto eol=lf
+
+# 文本文件：明确按文本处理，固定 LF。
+*.md           text eol=lf
+*.txt          text eol=lf
+*.json         text eol=lf
+*.yml          text eol=lf
+*.yaml         text eol=lf
+*.py           text eol=lf
+*.pyw          text eol=lf
+*.ps1          text eol=lf
+*.vbs          text eol=lf
+.gitignore     text eol=lf
+.gitattributes text eol=lf
+
+# 批处理脚本必须 CRLF，否则 cmd.exe 解析标签/goto 可能异常。
+# 当前仓库暂无此类文件，预先钉死，免得以后再踩同一个坑。
+*.bat          text eol=crlf
+*.cmd          text eol=crlf
+
+# 二进制按原样保存，不做任何换行转换。
+*.png binary
+*.jpg binary
+*.ico binary
+*.bin binary

@@ -1,0 +1,18 @@
+# Python 缓存与虚拟环境
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 自检/运行产生的临时文件
+*.log
+*.tmp
+*_report.txt
+~$*
+
+# 编辑器与系统杂物
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Handoff Resume"
+  short_description: "Resume repository work from handoff files (Codex / WorkBuddy)"
+  default_prompt: "Read CODEX_PROJECT_PROMPT.md, docs/PROJECT_MAP.md, and docs/HANDOFF.md, then continue the active repository task."
